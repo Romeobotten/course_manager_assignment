@@ -3,12 +3,13 @@ package se.lexicon.course_manager_assignment.model;
 import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
 public class Course {
 
-    private final int id;
+    private int id;
     private String courseName;
     private LocalDate startDate;
     private int weekDuration;
@@ -19,10 +20,10 @@ public class Course {
         this.courseName = courseName;
         this.startDate = startDate;
         this.weekDuration = weekDuration;
-        this.students = null;
+        this.students = new ArrayList<>();
     }
 
-    public int getId() {
+    public int getId() { // no setter for id
         return id;
     }
 
@@ -51,7 +52,10 @@ public class Course {
     }
 
     public Collection<Student> getStudents() {
-        return students;
+        System.out.println(students.toString());
+        if(students == null) {
+            return null;
+        } else return students;
     }
 
     public void setStudents(Collection<Student> students) {
@@ -59,21 +63,23 @@ public class Course {
     }
 
     public boolean enrollStudent(Student student) {
-        if(student.equals(null)) {
+        if(getStudents() == null) {
             return false;
-        } else if(student.equals(students.contains(student))) {
+        } else if(student.equals(null)) {
+            System.out.println("Student var null");
             return false;
         } else {
             students.add(student);
+            System.out.println("Added: " + student.toString());
             return true;
         }
     }
 
     public boolean unenrollStudent(Student student) {
-        if(student.equals(null)) {
-            return false;
-        } else if(student.equals(students.contains(student))) {
+
+            if(students.contains(student)) {
             students.remove(student);
+            System.out.println("Removed: " + student.toString());
             return true;
         } else {
             return false;

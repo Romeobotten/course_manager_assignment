@@ -14,21 +14,25 @@ import java.util.List;
 public class ModelToDto implements Converters {
     @Override
     public StudentView studentToStudentView(Student student) {
-        return null;
+        return new StudentView(student.getId(),student.getName(),
+                student.getEmail(),student.getAddress());
     }
 
     @Override
     public CourseView courseToCourseView(Course course) {
-        return null;
+        return new CourseView(course.getId(),course.getCourseName(),
+                course.getStartDate(),course.getWeekDuration(),(List)course.getStudents());
     }
 
     @Override
     public List<CourseView> coursesToCourseViews(Collection<Course> courses) {
-        return null;
+        List<CourseView> list = (List)courses;
+        return list;
     }
 
     @Override
     public List<StudentView> studentsToStudentViews(Collection<Student> students) {
-        return null;
+        List<StudentView> list = (List)students;
+        return list;
     }
 }

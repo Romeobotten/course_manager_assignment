@@ -1,50 +1,79 @@
 package se.lexicon.course_manager_assignment.data.dao;
 
-
-
 import se.lexicon.course_manager_assignment.model.Course;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-
+import java.util.Iterator;
 
 public class CourseCollectionRepository implements CourseDao{
 
     private Collection<Course> courses;
 
-
     public CourseCollectionRepository(Collection<Course> courses) {
-        this.courses = courses;
+        this.courses = new ArrayList<Course>();
     }
 
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
-        return null;
+        Course course = new Course(courseName, startDate, weekDuration);
+        courses.add(course);
+        return course;
     }
 
     @Override
     public Course findById(int id) {
-        return null;
+        Iterator<Course> iterator = courses.iterator();
+
+    while(iterator.hasNext()) {
+        Course course = iterator.next();
+            if(course.getId() == id) {
+                return course;
+            }
+        }
+    return null;
     }
 
     @Override
     public Collection<Course> findByNameContains(String name) {
-        return null;
+        if(courses.contains(name)) {
+            return courses;
+        } else return null;
     }
 
     @Override
     public Collection<Course> findByDateBefore(LocalDate end) {
-        return null;
+        Collection<Course> subcourses = new ArrayList<Course>();
+        Iterator<Course> iterator = courses.iterator();
+
+        while(iterator.hasNext()) {
+            Course course = iterator.next();
+            if(course.getStartDate().plusWeeks((long)course.getWeekDuration()).isBefore(end)) {
+                subcourses.add(course);
+            }
+        }
+        return subcourses;
     }
 
     @Override
     public Collection<Course> findByDateAfter(LocalDate start) {
-        return null;
+        Collection<Course> subcourses = new ArrayList<Course>();
+        Iterator<Course> iterator = courses.iterator();
+
+        while(iterator.hasNext()) {
+            Course course = iterator.next();
+            if(course.getStartDate().isAfter(start)) {
+                subcourses.add(course);
+            }
+        }
+        return subcourses;
     }
 
     @Override
     public Collection<Course> findAll() {
+//        courses.containsAll( );
         return null;
     }
 
@@ -55,11 +84,15 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public boolean removeCourse(Course course) {
-        return false;
+        if(courses.contains(course)) {
+            courses.remove(course);
+            return true;
+        } else return false;
     }
 
     @Override
     public void clear() {
+        courses.clear();
         this.courses = new HashSet<>();
     }
 }

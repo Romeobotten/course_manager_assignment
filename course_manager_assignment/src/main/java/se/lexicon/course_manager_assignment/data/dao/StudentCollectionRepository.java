@@ -1,11 +1,11 @@
 package se.lexicon.course_manager_assignment.data.dao;
 
 
-
 import se.lexicon.course_manager_assignment.model.Student;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class StudentCollectionRepository implements StudentDao {
@@ -18,21 +18,33 @@ public class StudentCollectionRepository implements StudentDao {
 
     @Override
     public Student createStudent(String name, String email, String address) {
-        return null;
+        Student student = new Student(name, email, address);
+        return student;
     }
 
     @Override
     public Student findByEmailIgnoreCase(String email) {
+
+
         return null;
     }
 
     @Override
     public Collection<Student> findByNameContains(String name) {
+        students.contains(name);
+
         return null;
     }
 
     @Override
     public Student findById(int id) {
+        Iterator<Student> iterator = students.iterator();
+        while(iterator.hasNext()) {
+            Student student = iterator.next();
+            if(student.getId() == id) {
+                return student;
+            }
+        }
         return null;
     }
 
@@ -43,7 +55,10 @@ public class StudentCollectionRepository implements StudentDao {
 
     @Override
     public boolean removeStudent(Student student) {
-        return false;
+        if(students.contains(student)) {
+            removeStudent(student);
+            return true;
+        } else return false;
     }
 
     @Override
