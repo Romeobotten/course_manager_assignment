@@ -3,7 +3,6 @@ package se.lexicon.course_manager_assignment.data.dao;
 import se.lexicon.course_manager_assignment.model.Course;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,7 +12,7 @@ public class CourseCollectionRepository implements CourseDao{
     private Collection<Course> courses;
 
     public CourseCollectionRepository(Collection<Course> courses) {
-        this.courses = new ArrayList<Course>();
+        this.courses = courses;
     }
 
     @Override
@@ -27,25 +26,31 @@ public class CourseCollectionRepository implements CourseDao{
     public Course findById(int id) {
         Iterator<Course> iterator = courses.iterator();
 
-    while(iterator.hasNext()) {
-        Course course = iterator.next();
-            if(course.getId() == id) {
-                return course;
+        while(iterator.hasNext()) {
+            Course course = iterator.next();
+                if(course.getId() == id) {
+                    return course;
+                }
             }
-        }
-    return null;
+        return null;
     }
 
     @Override
     public Collection<Course> findByNameContains(String name) {
-        if(courses.contains(name)) {
-            return courses;
-        } else return null;
+        Collection<Course> subcourse = new HashSet<>();
+        Iterator<Course> iterator = courses.iterator();
+        while(iterator.hasNext()) {
+            Course course = iterator.next();
+            if(course.getCourseName().equals(name)) {
+                subcourse.add(course);
+            }
+        }
+        return subcourse;
     }
 
     @Override
     public Collection<Course> findByDateBefore(LocalDate end) {
-        Collection<Course> subcourses = new ArrayList<Course>();
+        Collection<Course> subcourses = new HashSet<>();
         Iterator<Course> iterator = courses.iterator();
 
         while(iterator.hasNext()) {
@@ -59,7 +64,7 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Collection<Course> findByDateAfter(LocalDate start) {
-        Collection<Course> subcourses = new ArrayList<Course>();
+        Collection<Course> subcourses = new HashSet<>();
         Iterator<Course> iterator = courses.iterator();
 
         while(iterator.hasNext()) {
@@ -73,13 +78,21 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Collection<Course> findAll() {
-//        courses.containsAll( );
-        return null;
+        return courses;
     }
 
     @Override
     public Collection<Course> findByStudentId(int studentId) {
-        return null;
+        Collection<Course> subcourses = new HashSet<>();
+        Iterator<Course> iterator = courses.iterator();
+
+        while(iterator.hasNext()) {
+            Course course = iterator.next();
+            if(course.getStudents().contains(studentId)) {
+                subcourses.add(course);
+            }
+        }
+        return subcourses;
     }
 
     @Override
@@ -93,6 +106,6 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public void clear() {
         courses.clear();
-        this.courses = new HashSet<>();
+        this.courses = new HashSet<>(); // Why Hashset?
     }
 }
