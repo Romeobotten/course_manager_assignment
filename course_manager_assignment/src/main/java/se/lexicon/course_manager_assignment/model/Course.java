@@ -3,8 +3,8 @@ package se.lexicon.course_manager_assignment.model;
 import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Course {
@@ -20,7 +20,7 @@ public class Course {
         this.courseName = courseName;
         this.startDate = startDate;
         this.weekDuration = weekDuration;
-        this.students = new ArrayList<>();
+        this.students = new HashSet<>();
     }
 
     public int getId() { // no setter for id
@@ -55,10 +55,11 @@ public class Course {
         System.out.println(students.toString());
         if(students == null) {
             return null;
-        } else return students;
+        } else return this.students;
     }
 
     public void setStudents(Collection<Student> students) {
+
         this.students = students;
     }
 

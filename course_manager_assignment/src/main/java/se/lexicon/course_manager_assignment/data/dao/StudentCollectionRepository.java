@@ -13,13 +13,13 @@ public class StudentCollectionRepository implements StudentDao {
     private Collection<Student> students;
 
     public StudentCollectionRepository(Collection<Student> students) {
-        this.students = students;
+        this.students = new HashSet<>();
     }
 
     @Override
     public Student createStudent(String name, String email, String address) {
         Student student = new Student(name, email, address);
-        students.add(student);
+        this.students.add(student);
         return student;
     }
 
@@ -69,7 +69,7 @@ public class StudentCollectionRepository implements StudentDao {
     @Override
     public boolean removeStudent(Student student) {
         if(students.contains(student)) {
-            removeStudent(student);
+            students.remove(student);
             return true;
         } else return false;
     }

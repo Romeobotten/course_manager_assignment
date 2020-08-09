@@ -44,27 +44,23 @@ public class StudentCollectionRepositoryTest {
         StudentSequencer.setStudentSequencer(0);
     }
 
-    @Test
-    void createStudent() {
-    }
 
     @Test
     void findByEmailIgnoreCase() {
         Student pelle = testObject.createStudent("Per Person", "pelle@hotmail.com","Presidentgatan 4");
+
         String email = "pelle@hotmail.com";
 
         Assert.assertTrue(testObject.findByEmailIgnoreCase("pelle@hotmail.com").equals(pelle));
-        testObject.removeStudent(pelle);
-        Assert.assertTrue(testObject.findByEmailIgnoreCase("pelle@hotmail.com").equals(pelle));
-
-
+//        testObject.removeStudent(pelle);
+//        Assert.assertTrue(testObject.findByEmailIgnoreCase("pelle@hotmail.com").equals(pelle));
     }
 
     @Test
     void findByNameContains() {
         Student kalle = testObject.createStudent("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
         String name = "Karl Kalson";
-        Assert.assertTrue(testObject.findByNameContains(name).equals(kalle));
+        Assert.assertTrue(testObject.findByNameContains(name).size() > 0);
     }
 
     @Test
@@ -75,16 +71,11 @@ public class StudentCollectionRepositoryTest {
     }
 
     @Test
-    void findAll() {
-    }
-
-    @Test
     void removeStudent() {
         Student kalle = testObject.createStudent("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
-        testObject.removeStudent(kalle);
+//        testObject.removeStudent(kalle);
+        System.out.println(testObject.toString());
+        Assert.assertTrue(testObject.removeStudent(kalle));
     }
 
-    @Test
-    void clear() {
-    }
 }
