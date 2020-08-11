@@ -20,14 +20,14 @@ public class ModelToDto implements Converters {
     }
 
     @Override
-    public CourseView courseToCourseView(Course course) {
+    public CourseView courseToCourseView(Course course) { // Typecast to List might not work here?
         return new CourseView(course.getId(),course.getCourseName(),
                 course.getStartDate(),course.getWeekDuration(),(List)course.getStudents());
     }
 
     @Override
     public List<CourseView> coursesToCourseViews(Collection<Course> courses) {
-        List<CourseView> list = (List)courses;
+        List<CourseView> list = (List)courses; // This maybe not working?
         return list;
     }
 

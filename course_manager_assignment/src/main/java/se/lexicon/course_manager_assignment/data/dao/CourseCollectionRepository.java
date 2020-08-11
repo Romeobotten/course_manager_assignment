@@ -3,6 +3,7 @@ package se.lexicon.course_manager_assignment.data.dao;
 import se.lexicon.course_manager_assignment.model.Course;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -37,7 +38,7 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Collection<Course> findByNameContains(String name) {
-        Collection<Course> subcourse = new HashSet<>();
+        Collection<Course> subcourse = new ArrayList<>();
         Iterator<Course> iterator = courses.iterator();
         while(iterator.hasNext()) {
             Course course = iterator.next();
@@ -50,7 +51,7 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Collection<Course> findByDateBefore(LocalDate end) {
-        Collection<Course> subcourses = new HashSet<>();
+        Collection<Course> subcourses = new ArrayList<>();
         Iterator<Course> iterator = courses.iterator();
 
         while(iterator.hasNext()) {
@@ -64,7 +65,7 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Collection<Course> findByDateAfter(LocalDate start) {
-        Collection<Course> subcourses = new HashSet<>();
+        Collection<Course> subcourses = new ArrayList<>();
         Iterator<Course> iterator = courses.iterator();
 
         while(iterator.hasNext()) {
@@ -83,7 +84,7 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Collection<Course> findByStudentId(int studentId) {
-        Collection<Course> subcourses = new HashSet<>();
+        Collection<Course> subcourses = new ArrayList<>();
         Iterator<Course> iterator = courses.iterator();
 
         while(iterator.hasNext()) {
