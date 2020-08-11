@@ -8,9 +8,11 @@ import se.lexicon.course_manager_assignment.data.service.converter.Converters;
 import se.lexicon.course_manager_assignment.dto.forms.CreateCourseForm;
 import se.lexicon.course_manager_assignment.dto.forms.UpdateCourseForm;
 import se.lexicon.course_manager_assignment.dto.views.CourseView;
-
+import se.lexicon.course_manager_assignment.model.Course;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -29,12 +31,20 @@ public class CourseManager implements CourseService {
 
     @Override
     public CourseView create(CreateCourseForm form) {
-        return null;
+        Course course = courseDao.createCourse(form.getCourseName(), form.getStartDate(), form.getWeekDuration());
+        return converters.courseToCourseView(course);
     }
 
     @Override
     public CourseView update(UpdateCourseForm form) {
-        return null;
+        Course UpdateCourse = courseDao.findById(form.getId());
+        if (UpdateCourse != null) {
+            UpdateCourse.setCourseName(form.getCourseName());
+            UpdateCourse.setStartDate(form.getStartDate());
+            UpdateCourse.setWeekDuration(form.getWeekDuration());
+
+            return converters.courseToCourseView(UpdateCourse);
+        } else return null;
     }
 
     @Override
@@ -64,12 +74,19 @@ public class CourseManager implements CourseService {
 
     @Override
     public CourseView findById(int id) {
-        return null;
+        Course course = courseDao.findById(id);
+        if (course == null) {
+            return null;
+        } else {
+            return converters.courseToCourseView(course);
+        }
     }
 
     @Override
     public List<CourseView> findAll() {
-        return null;
+        Collection<Course> courseList = new ArrayList<>();
+        courseList = courseDao.findAll();
+        return converters.coursesToCourseViews(courseList);
     }
 
     @Override
@@ -79,6 +96,12 @@ public class CourseManager implements CourseService {
 
     @Override
     public boolean deleteCourse(int id) {
-        return false;
+        Course course = courseDao.findById(id);
+        if (course == null) {
+            return false;
+        } else {
+            courseDao.removeCourse(course);
+            return true;
+        }
     }
 }

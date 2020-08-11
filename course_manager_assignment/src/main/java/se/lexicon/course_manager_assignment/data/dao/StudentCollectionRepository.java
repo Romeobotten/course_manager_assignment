@@ -3,6 +3,7 @@ package se.lexicon.course_manager_assignment.data.dao;
 
 import se.lexicon.course_manager_assignment.model.Student;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,7 +14,7 @@ public class StudentCollectionRepository implements StudentDao {
     private Collection<Student> students;
 
     public StudentCollectionRepository(Collection<Student> students) {
-        this.students = new HashSet<>();
+        this.students = students;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class StudentCollectionRepository implements StudentDao {
         Iterator<Student> iterator = students.iterator();
         while(iterator.hasNext()) {
             Student student = iterator.next();
-            if(student.getEmail().equals(email)) {
+            if(student.getEmail().equalsIgnoreCase(email)) {
                 return student;
             }
         }
@@ -37,7 +38,7 @@ public class StudentCollectionRepository implements StudentDao {
 
     @Override
     public Collection<Student> findByNameContains(String name) {
-        Collection<Student> substudents = new HashSet<>();
+        Collection<Student> substudents = new ArrayList<>();
         Iterator<Student> iterator = students.iterator();
         while(iterator.hasNext()) {
             Student student = iterator.next();

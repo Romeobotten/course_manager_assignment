@@ -18,7 +18,7 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
         Course course = new Course(courseName, startDate, weekDuration);
-        courses.add(course);
+        this.courses.add(course);
         return course;
     }
 
