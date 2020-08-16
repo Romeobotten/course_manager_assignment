@@ -53,6 +53,7 @@ public class CourseView {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCourseName(), getStartDate(), getWeekDuration());
+//        return Objects.hash(getId(), getCourseName(), getStartDate(), getWeekDuration());
+        return Objects.hash(getId(), getCourseName(), getStartDate(), getWeekDuration(), getStudents());
     }
 }

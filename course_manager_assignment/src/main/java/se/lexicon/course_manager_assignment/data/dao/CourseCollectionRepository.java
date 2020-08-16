@@ -1,14 +1,17 @@
 package se.lexicon.course_manager_assignment.data.dao;
 
+import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
 import se.lexicon.course_manager_assignment.model.Course;
+import se.lexicon.course_manager_assignment.model.Student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+//import java.util.HashSet;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class CourseCollectionRepository implements CourseDao{
+public class CourseCollectionRepository implements CourseDao {
 
     private Collection<Course> courses;
 
@@ -18,21 +21,19 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
-        Course course = new Course(courseName, startDate, weekDuration);
+        Course course = new Course(CourseSequencer.nextCourseId(), courseName, startDate, weekDuration); // This is where the sequenzer should be called?
         this.courses.add(course);
         return course;
     }
 
     @Override
     public Course findById(int id) {
-        Iterator<Course> iterator = courses.iterator();
 
-        while(iterator.hasNext()) {
-            Course course = iterator.next();
-                if(course.getId() == id) {
-                    return course;
-                }
+        for (Course course : courses) {
+            if (course.getId() == id) {
+                return course;
             }
+        }
         return null;
     }
 
@@ -54,8 +55,8 @@ public class CourseCollectionRepository implements CourseDao{
         Collection<Course> subcourses = new ArrayList<>();
         Iterator<Course> iterator = courses.iterator();
 
-        while(iterator.hasNext()) {
-            Course course = iterator.next();
+        while(iterator.hasNext()) {  // Enhanced for loop might be better
+            Course course = iterator.next(); // Long not needed here
             if(course.getStartDate().plusWeeks((long)course.getWeekDuration()).isBefore(end)) {
                 subcourses.add(course);
             }
@@ -85,12 +86,14 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findByStudentId(int studentId) {
         Collection<Course> subcourses = new ArrayList<>();
-        Iterator<Course> iterator = courses.iterator();
 
-        while(iterator.hasNext()) {
-            Course course = iterator.next();
-            if(course.getStudents().contains(studentId)) {
-                subcourses.add(course);
+        for (Course course : courses) {
+            Collection<Student> substudents = course.getStudents();
+
+            for (Student student : substudents) {
+                if (student.getId() == studentId) {
+                    subcourses.add(course);
+                }
             }
         }
         return subcourses;

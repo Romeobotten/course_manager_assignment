@@ -13,11 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import se.lexicon.course_manager_assignment.data.dao.CourseCollectionRepository;
 import se.lexicon.course_manager_assignment.data.dao.StudentCollectionRepository;
-import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
-import se.lexicon.course_manager_assignment.data.sequencers.StudentSequencer;
 import se.lexicon.course_manager_assignment.model.Course;
 import se.lexicon.course_manager_assignment.model.Student;
-
 
 import javax.annotation.PostConstruct;
 import java.io.FileReader;
@@ -79,8 +76,8 @@ public class Initializer {
             currentStudentId = sequencerData.getProperty("currentStudentId");
             currentCourseId = sequencerData.getProperty("currentCourseId");
 
-            StudentSequencer.setStudentSequencer(Integer.parseInt(currentStudentId));
-            CourseSequencer.setCourseSequencer(Integer.parseInt(currentCourseId));
+            //StudentSequencer.setStudentSequencer(Integer.parseInt(currentStudentId));
+            //CourseSequencer.setCourseSequencer(Integer.parseInt(currentCourseId));
         }
     }
 

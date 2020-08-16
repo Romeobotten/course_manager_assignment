@@ -3,8 +3,9 @@ package se.lexicon.course_manager_assignment.model;
 import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+// import java.util.HashSet;
 import java.util.Objects;
 
 public class Course {
@@ -15,12 +16,12 @@ public class Course {
     private int weekDuration;
     private Collection<Student> students;
 
-    public Course(String courseName, LocalDate startDate, int weekDuration) {
-        this.id = CourseSequencer.nextCourseId(); // from data/sequencers
+    public Course(int id, String courseName, LocalDate startDate, int weekDuration) {
+        this.id = id; // ID is set in CourseCollectionRepository
         this.courseName = courseName;
         this.startDate = startDate;
         this.weekDuration = weekDuration;
-        this.students = new HashSet<>();
+        this.students = new ArrayList<>();
     }
 
     public int getId() { // no setter for id
@@ -59,7 +60,6 @@ public class Course {
     }
 
     public void setStudents(Collection<Student> students) {
-
         this.students = students;
     }
 
@@ -67,21 +67,17 @@ public class Course {
         if(getStudents() == null) {
             return false;
         } else if(student.equals(null)) {
-            System.out.println("Student var null");
             return false;
         } else {
             students.add(student);
-            System.out.println("Added: " + student.toString());
+//            System.out.println("Added: " + student.toString());
             return true;
         }
     }
 
     public boolean unenrollStudent(Student student) {
-
             if(students.contains(student)) {
-            students.remove(student);
-            System.out.println("Removed: " + student.toString());
-            return true;
+            return students.remove(student);
         } else {
             return false;
         }
@@ -99,7 +95,7 @@ public class Course {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, courseName, students);
+        return Objects.hash(id, courseName, startDate, weekDuration, students);
     }
 
     @Override

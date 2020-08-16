@@ -11,8 +11,8 @@ public class Student {
     private String email;
     private String address;
 
-    public Student(String name, String email, String address) {
-        this.id = StudentSequencer.nextStudentId(); // from data/sequencers
+    public Student(int id, String name, String email, String address) {
+        this.id = id; // ID is set in StudentCollectionRepository
         this.name = name;
         this.email = email;
         this.address = address;

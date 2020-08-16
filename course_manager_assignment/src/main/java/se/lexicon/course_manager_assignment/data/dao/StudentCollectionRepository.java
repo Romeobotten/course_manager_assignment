@@ -1,6 +1,7 @@
 package se.lexicon.course_manager_assignment.data.dao;
 
 
+import se.lexicon.course_manager_assignment.data.sequencers.StudentSequencer;
 import se.lexicon.course_manager_assignment.model.Student;
 
 import java.util.ArrayList;
@@ -19,17 +20,15 @@ public class StudentCollectionRepository implements StudentDao {
 
     @Override
     public Student createStudent(String name, String email, String address) {
-        Student student = new Student(name, email, address);
+        Student student = new Student(StudentSequencer.nextStudentId(), name, email, address); // This is where the sequenzer should be called?
         this.students.add(student);
         return student;
     }
 
     @Override
     public Student findByEmailIgnoreCase(String email) {
-        Iterator<Student> iterator = students.iterator();
-        while(iterator.hasNext()) {
-            Student student = iterator.next();
-            if(student.getEmail().equalsIgnoreCase(email)) {
+        for (Student student : students) {
+            if (student.getEmail().equalsIgnoreCase(email)) {
                 return student;
             }
         }
@@ -39,10 +38,8 @@ public class StudentCollectionRepository implements StudentDao {
     @Override
     public Collection<Student> findByNameContains(String name) {
         Collection<Student> substudents = new ArrayList<>();
-        Iterator<Student> iterator = students.iterator();
-        while(iterator.hasNext()) {
-            Student student = iterator.next();
-            if(student.getName().equals(name)) {
+        for (Student student : students) {
+            if (student.getName().equals(name)) {
                 substudents.add(student);
             }
         }
@@ -51,11 +48,9 @@ public class StudentCollectionRepository implements StudentDao {
 
     @Override
     public Student findById(int id) {
-        Iterator<Student> iterator = students.iterator();
 
-        while(iterator.hasNext()) {
-            Student student = iterator.next();
-            if(student.getId() == id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
                 return student;
             }
         }

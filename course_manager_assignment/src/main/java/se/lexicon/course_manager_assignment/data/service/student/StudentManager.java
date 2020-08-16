@@ -68,14 +68,14 @@ public class StudentManager implements StudentService {
 
     @Override
     public List<StudentView> searchByName(String name) {
-        Collection<Student> studentList = new ArrayList<>();
+        Collection<Student> studentList;
         studentList = studentDao.findByNameContains(name);
         return converters.studentsToStudentViews(studentList);
     }
 
     @Override
     public List<StudentView> findAll() {
-        Collection<Student> studentList = new ArrayList<>();
+        Collection<Student> studentList;
         studentList = studentDao.findAll();
         return converters.studentsToStudentViews(studentList);
     }

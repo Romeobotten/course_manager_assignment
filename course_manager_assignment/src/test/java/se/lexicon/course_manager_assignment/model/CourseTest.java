@@ -13,33 +13,10 @@ import java.util.Collection;
 //import static org.junit.Assert.assertTrue;
 
 public class CourseTest {
-    /**
-     * Arrange
-     * Act
-     * Assert
-     */
-    //        Course luxorBasic = new Course("ABC80 Basic", LocalDate.parse("2020-09-01"), 5);
-    Course luxorBasic = new Course("ABC80 Basic", LocalDate.of(2020, 9,1),5);
-    Student pelle = new Student("Per Person", "pelle@hotmail.com","Presidentgatan 4");
-    Student kalle = new Student("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
 
-    @BeforeEach
-    void setUp() {
-//        Student pelle = new Student("Per Person", "pelle@hotmail.com","Presidentgatan 4");
-//        Student kalle = new Student("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
-
-
-    }
-
-    @Test
-    void testEnrollStudent() {
-
-        luxorBasic.enrollStudent(pelle);
-//        System.out.println(pelle.toString());
-        luxorBasic.enrollStudent(kalle);
-//        System.out.println(kalle.toString());
-        Assert.assertNotEquals("[]", luxorBasic.getStudents().toString());
-    }
+    Course luxorBasic = new Course(1, "ABC80 Basic", LocalDate.of(2020, 9,1),5);
+    Student pelle = new Student(1, "Per Person", "pelle@hotmail.com","Presidentgatan 4");
+    Student kalle = new Student(2, "Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
 
     @Test
     void testGetSetEnrollUnenrollStudent() {
@@ -52,18 +29,21 @@ public class CourseTest {
         String empty = luxorBasic.getStudents().toString();
         testStudents.add(kalle);
         luxorBasic.setStudents(testStudents);
+        String viewStudent = luxorBasic.getStudents().toString();
 
         Assert.assertEquals("[]", empty);
         Assert.assertTrue(luxorBasic.getStudents().size() == 1);
+        Assert.assertEquals("[Student{id=2, name='Karl Kalson', email='kalle@hotmail.com', address='Kejsargatan 21'}]", viewStudent);
     }
 
     @Test
-    void getId() {
-        Assert.assertTrue(luxorBasic.getId() > 0);
+    void testGetId() {
+
+        Assert.assertTrue(luxorBasic.getId() == 1);
     }
 
     @Test
-    void getAndSetCourseName() {
+    void TestGetAndSetCourseName() {
         luxorBasic.setCourseName("Vic64 Basic");
         String vic64 = luxorBasic.getCourseName();
         luxorBasic.setCourseName("ABC80 Basic");
@@ -72,16 +52,16 @@ public class CourseTest {
     }
 
     @Test
-    void getAndSetStartDate() {
-        luxorBasic.setStartDate(LocalDate.of(1985,10,31));
-        String before = luxorBasic.getStartDate().toString();
-        luxorBasic.setStartDate(LocalDate.of(2020,9,1));
-        String soon = luxorBasic.getStartDate().toString();
-        Assert.assertTrue(before.equals("1985-10-31") && soon.equals("2020-09-01"));
+    void testGetAndSetStartDate() {
+        luxorBasic.setStartDate(LocalDate.of(2020,10,31));
+        String halloween = luxorBasic.getStartDate().toString();
+        luxorBasic.setStartDate(LocalDate.of(2020,12,13));
+        String lucia = luxorBasic.getStartDate().toString();
+        Assert.assertTrue(halloween.equals("2020-10-31") && lucia.equals("2020-12-13"));
     }
 
     @Test
-    void getAndSetWeekDuration() {
+    void testGetAndSetWeekDuration() {
         luxorBasic.setWeekDuration(25);
         int longTime = luxorBasic.getWeekDuration();
         luxorBasic.setWeekDuration(5);
@@ -91,19 +71,22 @@ public class CourseTest {
 
     @Test
     void testEquals() {
+        Course abcBasic = luxorBasic;
+        Assert.assertEquals(abcBasic, luxorBasic);
     }
 
     @Test
     void testHashCode() {
+        Course abcBasic = luxorBasic;
+        Assert.assertTrue(abcBasic.hashCode() == luxorBasic.hashCode());
     }
 
     @Test
     void testToString() {
-        Student pelle = new Student("Per Person", "pelle@hotmail.com","Presidentgatan 4");
         luxorBasic.enrollStudent(pelle);
-        String expected = "Course{id=2, courseName='ABC80 Basic', startDate=2020-09-01, weekDuration=5, " +
-                "students=[Student{id=5, name='Per Person', email='pelle@hotmail.com', address='Presidentgatan 4'}]}";
-        System.out.println(luxorBasic.toString());
+        String expected = "Course{id=1, courseName='ABC80 Basic', startDate=2020-09-01, weekDuration=5, " +
+                "students=[Student{id=1, name='Per Person', email='pelle@hotmail.com', address='Presidentgatan 4'}]}";
+//        System.out.println(luxorBasic.toString());
         Assert.assertEquals(expected,luxorBasic.toString());
     }
 }

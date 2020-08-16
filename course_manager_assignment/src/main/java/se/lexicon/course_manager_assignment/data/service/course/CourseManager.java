@@ -50,21 +50,21 @@ public class CourseManager implements CourseService {
 
     @Override
     public List<CourseView> searchByCourseName(String courseName) {
-        Collection<Course> courseList = new ArrayList<>();
+        Collection<Course> courseList; // ------------
         courseList = courseDao.findByNameContains(courseName);
         return converters.coursesToCourseViews(courseList);
     }
 
     @Override
     public List<CourseView> searchByDateBefore(LocalDate end) {
-        Collection<Course> courseList = new ArrayList<>();
+        Collection<Course> courseList; // Not needed?
         courseList = courseDao.findByDateBefore(end);
         return converters.coursesToCourseViews(courseList);
     }
 
     @Override
     public List<CourseView> searchByDateAfter(LocalDate start) {
-        Collection<Course> courseList = new ArrayList<>();
+        Collection<Course> courseList; // --------------
         courseList = courseDao.findByDateAfter(start);
         return converters.coursesToCourseViews(courseList);
     }
@@ -82,15 +82,16 @@ public class CourseManager implements CourseService {
     @Override
     public boolean removeStudentFromCourse(int courseId, int studentId) {
         Course course = courseDao.findById(courseId);
-        Collection<Course> courseList = new ArrayList<>();
+        Collection<Course> courseList; // Not needed?
         courseList = courseDao.findByStudentId(studentId);
+        Student student = studentDao.findById(studentId);
 
         if (course == null) {
             return false;
         } else if(courseList.isEmpty()) {
             return false;
-        } else if(courseList.contains(course)) {
-            return studentDao.removeStudent(studentDao.findById(studentId));
+        } else if(courseList.contains(course)) { // this was not working, Ok now?
+            return course.unenrollStudent(student);
         } else return false;
     }
 
@@ -106,14 +107,14 @@ public class CourseManager implements CourseService {
 
     @Override
     public List<CourseView> findAll() {
-        Collection<Course> courseList = new ArrayList<>();
+        Collection<Course> courseList; // ************
         courseList = courseDao.findAll();
         return converters.coursesToCourseViews(courseList);
     }
 
     @Override
     public List<CourseView> findByStudentId(int studentId) {
-        Collection<Course> courseList = new ArrayList<>();
+        Collection<Course> courseList; //+++++++++++++++++++
         courseList = courseDao.findByStudentId(studentId);
         return converters.coursesToCourseViews(courseList);
     }
@@ -124,8 +125,7 @@ public class CourseManager implements CourseService {
         if (course == null) {
             return false;
         } else {
-            courseDao.removeCourse(course);
-            return true;
+            return courseDao.removeCourse(course);
         }
     }
 }

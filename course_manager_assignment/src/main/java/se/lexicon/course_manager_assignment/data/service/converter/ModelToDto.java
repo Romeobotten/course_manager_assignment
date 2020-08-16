@@ -20,23 +20,30 @@ public class ModelToDto implements Converters {
     }
 
     @Override
-    public CourseView courseToCourseView(Course course) { // Typecast to List might not work here?
+    public CourseView courseToCourseView(Course course) { // This is done
         return new CourseView(course.getId(),course.getCourseName(),
-                course.getStartDate(),course.getWeekDuration(),(List)course.getStudents());
+                course.getStartDate(),course.getWeekDuration(),studentsToStudentViews(course.getStudents()));
     }
 
     @Override
     public List<CourseView> coursesToCourseViews(Collection<Course> courses) {
-        List<CourseView> list = (List)courses; // This maybe not working?
+//        List<CourseView> list = (List)courses; // This is not working?
+        if(courses == null) {
+            courses = new ArrayList<>();
+        }
+        List<CourseView> list = new ArrayList<>();
+        for(Course course: courses) {
+            list.add(courseToCourseView(course));
+        }
         return list;
     }
 
     @Override
     public List<StudentView> studentsToStudentViews(Collection<Student> students) {
+
         if(students == null) {
             students = new ArrayList<>();
         }
-//        List<StudentView> list = (List)students;
         List<StudentView> list = new ArrayList<>();
         for(Student student: students) {
             list.add(studentToStudentView(student));

@@ -46,7 +46,7 @@ public class StudentCollectionRepositoryTest {
 
 
     @Test
-    void findByEmailIgnoreCase() {
+    void TestFindByEmailIgnoreCase() {
         Student pelle = testObject.createStudent("Per Person", "pelle@hotmail.com","Presidentgatan 4");
 
         String email = "pelle@hotmail.com";
@@ -57,21 +57,21 @@ public class StudentCollectionRepositoryTest {
     }
 
     @Test
-    void findByNameContains() {
+    void TestFindByNameContains() {
         Student kalle = testObject.createStudent("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
         String name = "Karl Kalson";
-        Assert.assertTrue(testObject.findByNameContains(name).size() > 0);
+        Assert.assertTrue(testObject.findByNameContains(name).size() == 1);
     }
 
     @Test
-    void findById() {
+    void testFindById() {
         Student kalle = testObject.createStudent("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
         int id = 1;
         Assert.assertTrue(testObject.findById(id).equals(kalle));
     }
 
     @Test
-    void removeStudent() {
+    void testRemoveStudent() {
         Student kalle = testObject.createStudent("Karl Kalson", "kalle@hotmail.com", "Kejsargatan 21");
 //        testObject.removeStudent(kalle);
         System.out.println(testObject.toString());
