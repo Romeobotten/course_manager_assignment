@@ -7,10 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.Collection;
 
-//import static org.junit.Assert.assertNotNull;
-
-//import static org.junit.Assert.assertFalse;
-//import static org.junit.Assert.assertTrue;
 
 public class CourseTest {
 

@@ -8,10 +8,12 @@ import se.lexicon.course_manager_assignment.data.service.converter.Converters;
 import se.lexicon.course_manager_assignment.dto.forms.CreateStudentForm;
 import se.lexicon.course_manager_assignment.dto.forms.UpdateStudentForm;
 import se.lexicon.course_manager_assignment.dto.views.StudentView;
+import se.lexicon.course_manager_assignment.model.Course;
 import se.lexicon.course_manager_assignment.model.Student;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -86,6 +88,13 @@ public class StudentManager implements StudentService {
         if (student == null) {
             return false;
         } else {
+            Collection<Course> courses =  courseDao.findByStudentId(id);
+            Iterator<Course> iterator = courses.iterator();
+
+            while(iterator.hasNext()) {
+                Course course = iterator.next();
+                course.unenrollStudent(student);
+            }
             studentDao.removeStudent(student);
             return true;
         }

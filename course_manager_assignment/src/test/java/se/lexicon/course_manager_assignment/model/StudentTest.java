@@ -15,16 +15,17 @@ public class StudentTest {
         int number2 = kalle.getId();
 //        System.out.println(number1 + " - " + number2);
         Assert.assertTrue(number1 + 1 == number2);
+        Assert.assertFalse(number1 == number2);
     }
 
 
     @Test
     void testSetAndGetNameEmailAndAddress() {
-        String b3 = number3.getName();
+        String treben = number3.getName();
         number3.setName("Bo Ek");
         number3.setEmail("bosse@algonet.se");
         number3.setAddress("Åvägen 3");
-        Assert.assertTrue(b3 == "Treben Ek" && "Bo Ek" == number3.getName() &&
+        Assert.assertTrue("Treben Ek" == treben && "Bo Ek" == number3.getName() &&
                 "bosse@algonet.se" == number3.getEmail() && "Åvägen 3" == number3.getAddress());
     }
 

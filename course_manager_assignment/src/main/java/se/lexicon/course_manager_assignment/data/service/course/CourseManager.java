@@ -12,7 +12,7 @@ import se.lexicon.course_manager_assignment.model.Course;
 import se.lexicon.course_manager_assignment.model.Student;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class CourseManager implements CourseService {
     @Override
     public boolean removeStudentFromCourse(int courseId, int studentId) {
         Course course = courseDao.findById(courseId);
-        Collection<Course> courseList; // Not needed?
+        Collection<Course> courseList; // init Not needed?
         courseList = courseDao.findByStudentId(studentId);
         Student student = studentDao.findById(studentId);
 
@@ -90,7 +90,7 @@ public class CourseManager implements CourseService {
             return false;
         } else if(courseList.isEmpty()) {
             return false;
-        } else if(courseList.contains(course)) { // this was not working, Ok now?
+        } else if(courseList.contains(course)) { // Ok now?
             return course.unenrollStudent(student);
         } else return false;
     }
